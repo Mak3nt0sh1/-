@@ -105,8 +105,50 @@ int main()
 				break;
 			}
 		}
-	} while (flag);
-	system("cls");
-	cout << "GAME OVER\n";
-	system("pause");
+		int X = array_X[length - 1] + dx;
+		int Y = array_Y[length - 1] + dy;
+		if (X == 0 || X == width - 1 || Y == 0 || Y == height - 1)
+		{
+			flag = false;
+		}
+		else if (X == X_apple && Y == Y_apple)
+		{
+			c.X = array_X[length - 1];
+			c.Y = array_Y[length - 1];
+			SetConsoleCursorPosition(h, c);
+			putchar(snake);
+
+			length++;
+			c.X = array_X[length - 1] = X;
+			c.Y = array_Y[length - 1] = Y;
+			SetConsoleCursorPosition(h, c);
+			putchar(head);
+		
+			if (length == max_length)
+			{
+				break; 
+			}
+
+			int i; 
+			do
+			{
+				X_apple = rand() % (width - 2) + 1; 
+				Y_apple = rand() % (height - 2) + 1;
+				i = 0; 
+				for (; i < length; i++) 
+					if (X_apple == array_X[i] && Y_apple == array_Y[i]) 
+						break; 
+			} while (i < length); 
+			c.X = X_apple; 
+			c.Y = Y_apple;
+			SetConsoleCursorPosition(h, c); 
+			SetConsoleTextAttribute(h, 12); 
+			putchar(apple); 
+			SetConsoleTextAttribute(h, 10); 
+		}
+		} while (flag);
+		system("cls");
+		cout << "GAME OVER\n";
+		system("pause");
+	
 }
