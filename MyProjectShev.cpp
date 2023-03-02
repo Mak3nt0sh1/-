@@ -37,7 +37,7 @@ int main()
 	CONSOLE_CURSOR_INFO cci = { sizeof(cci), false };
 	SetConsoleCursorInfo(h, &cci);
 
-	SetConsoleTextAttribute(h, 4);
+	SetConsoleTextAttribute(h, 5);
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
@@ -123,29 +123,56 @@ int main()
 			c.Y = array_Y[length - 1] = Y;
 			SetConsoleCursorPosition(h, c);
 			putchar(head);
-		
+
 			if (length == max_length)
 			{
-				break; 
+				break;
 			}
 
-			int i; 
+			int i;
 			do
 			{
-				X_apple = rand() % (width - 2) + 1; 
+				X_apple = rand() % (width - 2) + 1;
 				Y_apple = rand() % (height - 2) + 1;
-				i = 0; 
-				for (; i < length; i++) 
-					if (X_apple == array_X[i] && Y_apple == array_Y[i]) 
-						break; 
-			} while (i < length); 
-			c.X = X_apple; 
+				i = 0;
+				for (; i < length; i++)
+					if (X_apple == array_X[i] && Y_apple == array_Y[i])
+						break;
+			} while (i < length);
+			c.X = X_apple;
 			c.Y = Y_apple;
-			SetConsoleCursorPosition(h, c); 
-			SetConsoleTextAttribute(h, 12); 
-			putchar(apple); 
-			SetConsoleTextAttribute(h, 10); 
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 12);
+			putchar(apple);
+			SetConsoleTextAttribute(h, 10);
 		}
+		else 
+		{
+			c.X = array_X[0];
+			c.Y = array_Y[0];
+			SetConsoleCursorPosition(h, c); 
+			putchar(' '); 
+
+			if (length > 1) 
+			{
+				c.X = array_X[length - 1]; 
+				c.Y = array_Y[length - 1];
+				SetConsoleCursorPosition(h, c);  
+				putchar(snake); 
+			}
+
+			for (int i = 0; i < length - 1; i++) 
+			{
+				array_X[i] = array_X[i + 1]; 
+				array_Y[i] = array_Y[i + 1];
+			}
+
+			c.X = array_X[length - 1] = X; 
+			c.Y = array_Y[length - 1] = Y;
+			SetConsoleCursorPosition(h, c); 
+			putchar(head); 
+		}
+	
 		} while (flag);
 		system("cls");
 		cout << "GAME OVER\n";
